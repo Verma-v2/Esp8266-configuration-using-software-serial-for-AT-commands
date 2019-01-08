@@ -1,4 +1,4 @@
-MIT License
+/*MIT License
 
 Copyright (c) 2019 Gyanendra Verma
 
@@ -18,4 +18,36 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+SOFTWARE.*/
+
+
+#include <SoftwareSerial.h> //Software serial library
+// pins initalization
+SoftwareSerial esp8266(10,9 ) tx,rx;
+
+void setup() {
+  // Open serial communications and wait for port to open:
+  Serial.begin(9600);
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for native USB port only
+  }
+
+  Serial.println("Started");
+
+  // set the data rate for the SoftwareSerial port
+  esp8266.begin(9600);
+  esp8266.write("AT\r\n");
+}
+
+void loop() {
+  if (esp8266.available()) {
+    Serial.write(esp8266.read());
+  }
+  if (Serial.available()) {
+    esp8266.write(Serial.read());
+  }
+}
+
+
+
+
